@@ -18,21 +18,36 @@ class AbstractMelonOrder():
         """Calculate price, including tax."""
 
         base_price = 5
-        total = (1 + self.tax) * self.qty * base_price
 
         if self.species == "Christmas":
             base_price = base_price * 1.5
-            total = (1 + self.tax) * self.qty * base_price
-            return total
-        else:
-            return total
+
+        total = (1 + self.tax) * self.qty * base_price
+        
+        return total    
 
     def mark_shipped(self):
         """Record the fact than an order has been shipped."""
 
         self.shipped = True
 
+class GovernmentMelonOrder(AbstractMelonOrder):
+    """Melon order purchased by the US Government."""
 
+    tax = 0
+    order_type = 'government'
+
+    def __init__(self, species, qty):
+        super().__init__(species, qty)
+        self.pass_inspection = False
+
+    def mark_inspection(self, passed):
+        """checks if inspection is passed.
+
+        Takes boolean input as argument.
+        """
+        
+        self.passed_inspection = passed
 
 class DomesticMelonOrder(AbstractMelonOrder):
     """A melon order within the USA."""
