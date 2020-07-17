@@ -6,12 +6,13 @@ class AbstractMelonOrder():
     tax = None
     order_type = None
 
-    def __init__(self, species, qty):
+    def __init__(self, species, qty, country_code=None):
         """Initialize melon order attributes."""
 
         self.species = species
         self.qty = qty
         self.shipped = False
+        self.country_code = country_code
 
     def get_total(self):
         """Calculate price, including tax."""
@@ -40,12 +41,6 @@ class InternationalMelonOrder(AbstractMelonOrder):
 
     tax = 0.17
     order_type = "international"
-
-    def __init__(self, species, qty, country_code):
-        """Initialize melon order attributes."""
-        super().__init__(species, qty)
-        self.country_code = country_code
-    
 
     def get_country_code(self):
         """Return the country code."""
