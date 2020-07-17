@@ -28,12 +28,12 @@ class AbstractMelonOrder():
         self.shipped = True
 
 
+
 class DomesticMelonOrder(AbstractMelonOrder):
     """A melon order within the USA."""
 
     tax = 0.08
     order_type = 'domestic'
-
 
 
 class InternationalMelonOrder(AbstractMelonOrder):
@@ -46,3 +46,16 @@ class InternationalMelonOrder(AbstractMelonOrder):
         """Return the country code."""
 
         return self.country_code
+
+    def get_total(self):
+        """Flat fee of $3 added to order with less than 10 melons.
+
+        If more than 10 melons then return the regular total no added fee.
+        """
+        if self.qty < 10:
+            return super().get_total() + 3
+        else:
+            return super().get_total()
+
+
+
