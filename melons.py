@@ -1,6 +1,7 @@
 """Classes for melon orders."""
 
 from random import randint
+from datetime import datetime
 
 class AbstractMelonOrder():
     """An abstract base class that other Melon Orders inherit from."""
@@ -19,7 +20,16 @@ class AbstractMelonOrder():
     def get_base_price(self):
         """Splurge price by choosing random number between 5-9 as base price"""
 
-        return randint(5, 9)
+        splurge_pricing = randint(5, 9)
+
+        rush_hour = 0
+        # 0-6 is mon-sunday
+        today = datetime.today()
+        time = datetime.time(today)
+        if 0 <= today.weekday() <= 4 and 8 <= time.hour <= 11:
+            rush_hour = 4
+
+        return splurge_pricing + rush_hour
 
     def get_total(self):
         """Calculate price, including tax."""
